@@ -1,28 +1,14 @@
-import * as gpio from 'rpi-gpio';
+import { Light } from './Light';
 
 const pin = 7;
-let status = true;
+const light = new Light(pin);
 
-gpio.setup(pin, gpio.DIR_OUT, () => {
-  loop();
-});
+light.setup(loop);
 
 function loop() {
-  flip(() => {
+  light.flip(() => {
     setTimeout(() => {
       loop();
     }, 1000);
-  });
-}
-
-
-function flip(callback) {
-  status = !status;
-  gpio.write(pin, status, (error) => {
-    if (error) {
-      console.log(error);
-    }
-    console.log(`status is ${status}`);
-    callback();
   });
 }
