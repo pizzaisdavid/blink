@@ -10,10 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rpi-gpio": "^0.9.1"
+    "onoff": "^3.2.1"
   },
   "devDependencies": {
-    "@types/node": "^10.5.7",
+    "@types/node": "^10.7.1",
+    "@types/onoff": "0.0.28",
     "nodemon": "^1.18.3",
     "ts-node": "^7.0.0",
     "typescript": "^3.0.1"

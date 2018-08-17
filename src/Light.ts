@@ -1,25 +1,24 @@
-import * as gpio from 'rpi-gpio';
+import { Gpio } from 'onoff';
 
 export class Light {
+  public static OFF = 0;
+  public static ON = 1;
 
-  private status: boolean;
+  private gpio: Gpio;
 
   constructor(private pin: number) {
-    this.status = false;
+    console.log(`pin: ${pin}`);
+    this.gpio = new Gpio(this.pin, 'input');
   }
-  
-  setup(callback: Function) {
-    gpio.setup(this.pin, gpio.DIR_OUT, callback);
-  }
-  
-  flip(callback: Function) {
-    this.status = !this.status;
-    gpio.write(this.pin, this.status, (error) => {
-      if (error) {
-        console.log(error);
-      }
-      console.log(`status is ${this.status}`);
-      callback();
+
+  on(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.gpio.write(1, (error, value) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(value === 1);
+      });
     });
   }
 }
