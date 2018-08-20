@@ -1,23 +1,35 @@
 
-import { Light } from './index'
+import { Button, Light } from './index'
 
 async function main() {
-  const pin = 7;
-  const light = new Light(pin);
-  while (true) {
-    try {
-      await light.on();
-    } catch (error) {
-      console.log(error);
-    }
-    await sleep(1000);
-  }
-}
 
-function sleep(milliseconds: number) {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, milliseconds);
+  const led = await Light.make(7);
+  const button = await Button.make(9);
+
+  button.pressed((error) => {
+    led.flip();
   });
+
+  /*
+
+
+  const car = Car.make(
+    await MotorControl.make(),
+  );
+
+
+  const car = Car.make(
+    MotorControl.make(40,
+      [
+        Motor.make(1, 'clockwise'),
+        Motor.make(2, 'counter-clockwise'),
+      ]
+    ),
+    Light.make(7),
+    Ps3Controller.make(8),
+  );
+  car.manual();
+  */
 }
 
 main();

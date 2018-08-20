@@ -2,14 +2,26 @@
 import { Gpio } from 'onoff';
 
 export class Light {
-  public static OFF = 0;
-  public static ON = 1;
+
+  static async make(pin: number): Promise<Light> {
+    const gpio = new Gpio(pin, 'input');
+    const light = new Light(gpio);
+    light.setup();
+    return light;
+  }
 
   private gpio: Gpio;
 
-  constructor(private pin: number) {
-    console.log(`pin: ${pin}`);
-    this.gpio = new Gpio(this.pin, 'input');
+  constructor(gpio: Gpio) {
+    this.gpio = gpio;
+  }
+
+  async setup() {
+    await this.on();
+  }
+
+  async flip() {
+    await this.gpio.write(1);
   }
 
   on(): Promise<boolean> {
