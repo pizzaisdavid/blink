@@ -4,34 +4,36 @@ import { Pintail, Direction } from 'pintail';
 export class Light {
 
   static async make(pin: number): Promise<Light> {
-    const pintail = Pintail.make(pin, Direction.in);
+    const pintail = Pintail.make(pin, Direction.out);
     const light = new Light(pintail);
     await light.setup();
     return light;
   }
 
-  constructor(private pintail: Pintail, private state = false) {}
+  private state: boolean;
 
-  setup(): Promise<boolean> {
-    return this.update();
+  constructor(private pintail: Pintail) {
+    this.state = false
   }
 
-  flip(): Promise<boolean> {
-    this.state = !this.state;
-    return this.update();
+  setup(): Promise<void> {
+    return this.off();
   }
 
-  on(): Promise<boolean> {
-    this.state = true;
-    return this.update();
+  flip(): Promise<void> {
+    return this.update(!this.state);
   }
 
-  off(): Promise<boolean> {
-    this.state = false;
-    return this.update();
+  on(): Promise<void> {
+    return this.update(true);
   }
 
-  update(): Promise<boolean> {
-    return this.pintail.write(this.state);
+  off(): Promise<void> {
+    return this.update(false);
+  }
+
+  update(value: boolean): Promise<void> {
+    this.state = value;
+    return this.pintail.write(value);
   }
 }
