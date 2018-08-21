@@ -1,37 +1,37 @@
 
-import { Gpio } from 'onoff';
+import { Pintail, Direction } from 'pintail';
 
 export class Light {
 
   static async make(pin: number): Promise<Light> {
-    const gpio = new Gpio(pin, 'input');
-    const light = new Light(gpio);
-    light.setup();
+    const pintail = Pintail.make(pin, Direction.in);
+    const light = new Light(pintail);
+    await light.setup();
     return light;
   }
 
-  private gpio: Gpio;
+  constructor(private pintail: Pintail, private state = false) {}
 
-  constructor(gpio: Gpio) {
-    this.gpio = gpio;
+  setup(): Promise<boolean> {
+    return this.update();
   }
 
-  async setup() {
-    await this.on();
-  }
-
-  async flip() {
-    await this.gpio.write(1);
+  flip(): Promise<boolean> {
+    this.state = !this.state;
+    return this.update();
   }
 
   on(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.gpio.write(1, (error, value) => {
-        if (error) {
-          reject(error);
-        }
-        resolve(value === 1);
-      });
-    });
+    this.state = true;
+    return this.update();
+  }
+
+  off(): Promise<boolean> {
+    this.state = false;
+    return this.update();
+  }
+
+  update(): Promise<boolean> {
+    return this.pintail.write(this.state);
   }
 }

@@ -12,7 +12,7 @@ export class Motor {
   private gpio: Gpio;
 
   constructor(pin: number, private orientation = ORIENTATION.clockwise) {
-    this.gpio = new Gpio(pin, 'input');
+    this.gpio = new Gpio(pin, 'in');
   }
 
   async forward() {}

@@ -1,21 +1,21 @@
-import { Gpio } from 'onoff';
+import { Pintail, Direction, Edge } from 'pintail';
+import { Subscription } from 'rxjs';
 
 export class Button {
 
   static async make(pin: number): Promise<Button> {
-    const gpio = new Gpio(4, 'in', 'both');
-
-    const button = new Button(gpio);
+    const pintail = Pintail.make(4, Direction.in, Edge.both);
+    const button = new Button(pintail);
+    // TODO: setup
     return button;
   }
+  constructor(private pintail: Pintail) {}
 
-  private gpio: Gpio;
-
-  constructor(gpio: Gpio) {
-    this.gpio = gpio;
-  }
-
-  pressed(callback: (error: Error) => void) {
-    this.gpio.watch(callback);
+  pressed(
+    onNext: (value: boolean) => void,
+    onError?: (error: Error) => void,
+    onComplete?: () => void,
+  ): Subscription {
+    return this.pintail.subscribe(onNext, onError, onComplete);
   }
 }
