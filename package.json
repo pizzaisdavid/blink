@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "watch": "nodemon",
+    "prepare": "npm run build",
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
