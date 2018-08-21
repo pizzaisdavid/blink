@@ -1,12 +1,16 @@
 
-import { Button, Light } from './index'
+import { Light } from './index'
 
-async function main() {
+Light.make(7)
+  .then(led => {
 
-  const led = await Light.make(7);
-  const button = await Button.make(9);
+    const DURATION_IN_MILLISECONDS = 250;
 
-  button.pressed(() => led.flip());
-}
+    setInterval(() => {
+      led.flip()
+        .then(() => console.log(`the led is ${led.state}`))
+        .catch(error => console.error(error));
+    }, DURATION_IN_MILLISECONDS);
 
-main();
+  })
+  .catch(error => console.error(error));

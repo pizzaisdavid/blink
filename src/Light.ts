@@ -10,7 +10,7 @@ export class Light {
     return light;
   }
 
-  private state: boolean;
+  public state: boolean;
 
   constructor(private pintail: Pintail) {
     this.state = false
