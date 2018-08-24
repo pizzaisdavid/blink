@@ -1,6 +1,6 @@
 
-import { Motor } from './Motor';
-import { MotorControl } from './MotorControl';
+import { Motor } from '../atoms/Motor';
+import { MotorControl } from '../atoms/MotorControl';
 
 
 export class Car {

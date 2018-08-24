@@ -1,10 +1,28 @@
 
 import * as bus from 'i2c-bus';
+import { Motor, Configuration as MotorConfiguration } from './Motor';
+import { Pintail, Direction } from 'pintail';
+
+export interface Configuration {
+  address: number,
+  motors: MotorConfiguration[],
+}
 
 export class MotorControl {
 
+  static async build(configuration: Configuration): Promise<MotorControl> {
+    const controller = new MotorControl(configuration.address);
+    configuration.motors.forEach((m) => {
+      const pintail = controller.gpio(m.pin);
+      const motor = new Motor(pintail, m.orientation);
+      controller.append(motor);
+    });
+    await controller.setup();
+    return controller;
+  }
+
   private bus: bus.I2cBus;
-  private address = 0x40;
+  private motors: Motor[];
   private ALL_LED_ON_LOW = 0xFA;
   private ALL_LED_ON_HIGH = 0xFB;
   private ALL_LED_OFF_LOW = 0xFC;
@@ -16,13 +34,7 @@ export class MotorControl {
   private ALLCALL = 0x01;
   private OUTDRV = 0x04;
 
-  static async make(): Promise<MotorControl> {
-    const control = new MotorControl();
-    await control.setup();
-    return control;
-  }
-
-  constructor() {
+  constructor(private address: number = 0x40) {
     this.bus = bus.openSync(1);
   }
 
@@ -30,6 +42,14 @@ export class MotorControl {
     this.setupPwm();
     await this.setupOscillator();
     bus.open.bind
+  }
+
+  gpio(pin: number): Pintail {
+    return Pintail.make(pin, Direction.in);
+  }
+
+  append(motor: Motor) {
+    this.motors.push(motor);
   }
 
   setupPwm() {
