@@ -3,8 +3,7 @@ import { Pintail, Direction } from 'pintail';
 
 export class Light {
 
-  static async make(pin: number): Promise<Light> {
-    const pintail = Pintail.make(pin, Direction.out);
+  static async build(pintail: Pintail) {
     const light = new Light(pintail);
     await light.setup();
     return light;
