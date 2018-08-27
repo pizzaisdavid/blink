@@ -1,7 +1,5 @@
 
-import { Pin } from 'hydrangea';
-
-import { Subscription } from 'rxjs';
+import { Pin, Subscription } from 'hydrangea';
 
 export class Button {
 
