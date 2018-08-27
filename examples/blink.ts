@@ -1,16 +1,17 @@
 
-import { Light } from '../src'
+import { Light } from '../src';
 
-Light.make(2)
-  .then(led => {
+import { Hydrangea } from 'hydrangea';
 
-    const DURATION_IN_MILLISECONDS = 500;
+const board = new Hydrangea();
+const pin = board.createPin({
+  id: 3,
+  direction: Hydrangea.direction.in,
+});
+const light = new Light(pin);
 
-    setInterval(() => {
-      led.flip()
-        .then(() => console.log(`the led state is ${led.state}`))
-        .catch(error => console.error(error));
-    }, DURATION_IN_MILLISECONDS);
-
-  })
-  .catch(error => console.error(error));
+setInterval(() => {
+  light.flip()
+    .then(() => console.log(`the light state is ${light.state}`))
+    .catch(error => console.error(error));
+}, 500);
