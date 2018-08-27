@@ -4,18 +4,17 @@
       "es5",
       "es6"
     ],
-    "target": "es5",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es5",
     "outDir": "./dist",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "noImplicitAny": true,
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": false
   },
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
-    "dist"
+    "example",
+    "dist",
+    "**/*.spec.ts"
   ]
 }
