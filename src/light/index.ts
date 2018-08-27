@@ -1,2 +1,2 @@
 
-export * from './Led';
+export * from './led';

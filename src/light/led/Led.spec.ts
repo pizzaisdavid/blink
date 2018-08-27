@@ -4,7 +4,7 @@ import { Led } from './Led';
 import { expect } from 'chai';
 import { GpioMock } from 'hydrangea';
 
-describe('Light', () => {
+describe('Led', () => {
   let pin: GpioMock;
   let light: Led;
 

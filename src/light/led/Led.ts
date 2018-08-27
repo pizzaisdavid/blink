@@ -1,9 +1,15 @@
 
+import { Light } from '../Light';
+
 import { Pin } from 'hydrangea';
 
-export class Led {
+export class Led implements Light {
 
-  constructor(private pin: Pin, public state: boolean = false) {}
+  public state: boolean;
+  
+  constructor(private pin: Pin) {
+    this.state = false;
+  }
 
   flip(): Promise<void> {
     return this.update(!this.state);
