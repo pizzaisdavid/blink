@@ -1,5 +1,5 @@
 
-import { Button, Light } from '../src'
+import { Button, Led } from '../src'
 
 import { Hydrangea } from 'hydrangea';
 
@@ -8,7 +8,7 @@ const pin2 = board.createPin({ id: 3, direction: Hydrangea.direction.out });
 const pin3 = board.createPin({ id: 3, direction: Hydrangea.direction.in });
 
 const button = new Button(pin2);
-const light = new Light(pin3);
+const light = new Led(pin3);
 
 button.pressed(() => {
   light.flip()

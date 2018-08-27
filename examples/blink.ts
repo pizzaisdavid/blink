@@ -1,5 +1,5 @@
 
-import { Light } from '../src';
+import { Led } from '../src';
 
 import { Hydrangea } from 'hydrangea';
 
@@ -8,7 +8,7 @@ const pin = board.createPin({
   id: 3,
   direction: Hydrangea.direction.in,
 });
-const light = new Light(pin);
+const light = new Led(pin);
 
 setInterval(() => {
   light.flip()

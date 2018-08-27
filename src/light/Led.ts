@@ -1,7 +1,7 @@
 
 import { Pin } from 'hydrangea';
 
-export class Light {
+export class Led {
 
   constructor(private pin: Pin, public state: boolean = false) {}
 
