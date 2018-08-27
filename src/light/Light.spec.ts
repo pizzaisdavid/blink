@@ -10,9 +10,10 @@ describe('Light', () => {
 
   beforeEach(async () => {
     pin = new GpioMock();
+    light = new Light(pin);
   });
 
-  it('turn light on', async () => {
+  it('on', async () => {
     await light.on();
     const value = pin.shift();
     expect(value).to.equal(true);
