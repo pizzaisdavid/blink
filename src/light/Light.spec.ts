@@ -1,23 +1,21 @@
 
 import { Light } from './Light';
-// TODO: import { Pinta } from 'pintail';
 
-interface Pinta {
-
-}
+import { expect } from 'chai';
+import { GpioMock } from 'hydrangea';
 
 describe('Light', () => {
-  const pin = 4;
-  let mockPintail: Pinta;
+  let pin: GpioMock;
   let light: Light;
 
   beforeEach(async () => {
-    mockPintail = {};
-    light = await Light.build(mockPintail);
+    pin = new GpioMock();
   });
 
   it('turn light on', async () => {
     await light.on();
+    const value = pin.shift();
+    expect(value).to.equal(true);
   });
 
 });
