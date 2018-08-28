@@ -11,7 +11,7 @@ const pin = board.createPin({
 const light = new Led(pin);
 
 setInterval(() => {
-  light.flip()
+  light.toggle()
     .then(() => console.log(`the light state is ${light.state}`))
     .catch(error => console.error(error));
 }, 500);

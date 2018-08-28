@@ -11,7 +11,7 @@ export class Led implements Light {
     this.state = false;
   }
 
-  flip(): Promise<void> {
+  toggle(): Promise<void> {
     return this.update(!this.state);
   }
 
