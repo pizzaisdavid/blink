@@ -9,6 +9,7 @@ export class Led implements Light {
   
   constructor(private pin: Pin) {
     this.state = false;
+    // TODO: this state could actually be wrong.
   }
 
   toggle(): Promise<void> {

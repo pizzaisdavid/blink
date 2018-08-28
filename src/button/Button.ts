@@ -1,10 +1,15 @@
 
-import { Subscription } from 'hydrangea';
+import { Subscription, Pin } from 'hydrangea';
 
-export interface Button {
+export class Button {
+
+  constructor(private pin: Pin) {}
+
   pressed(
     onNext: (value: boolean) => void,
     onError?: (error: Error) => void,
     onComplete?: () => void,
-  ): Subscription;
+  ): Subscription {
+    return this.pin.subscribe(onNext, onError, onComplete);
+  }
 }

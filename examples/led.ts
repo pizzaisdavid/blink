@@ -8,10 +8,10 @@ const pin = board.createPin({
   id: 3,
   direction: Hydrangea.direction.in,
 });
-const light = new Led(pin);
+const led = new Led(pin);
 
 setInterval(() => {
-  light.toggle()
-    .then(() => console.log(`the light state is ${light.state}`))
+  led.toggle()
+    .then(() => console.log(`the led state is ${led.state}`))
     .catch(error => console.error(error));
 }, 500);
